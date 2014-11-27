@@ -52,13 +52,10 @@
             this.labelBank = new System.Windows.Forms.Label();
             this.textBoxMapBank = new System.Windows.Forms.TextBox();
             this.boxVersionSpecific = new System.Windows.Forms.GroupBox();
-            this.textBoxCry = new System.Windows.Forms.TextBox();
-            this.labelCry = new System.Windows.Forms.Label();
+            this.comboBoxCry = new System.Windows.Forms.ComboBox();
             this.buttonResetCry = new System.Windows.Forms.Button();
             this.buttonTruckRemove = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBoxIntroPKMN = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.buttonResetIntroPKMN = new System.Windows.Forms.Button();
             this.boxStartWith = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -67,7 +64,6 @@
             this.labelPCItemAmt = new System.Windows.Forms.Label();
             this.textBoxPCItemAmt = new System.Windows.Forms.TextBox();
             this.labelPCItemID = new System.Windows.Forms.Label();
-            this.textBoxPCItemID = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBoxTitleMusic = new System.Windows.Forms.TextBox();
             this.textBoxProfMusic = new System.Windows.Forms.TextBox();
@@ -78,6 +74,9 @@
             this.textBoxSecsOnTitle = new System.Windows.Forms.TextBox();
             this.checkBoxSkipGender = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.comboBoxIntroPKMN = new System.Windows.Forms.ComboBox();
+            this.comboBoxPCItemID = new System.Windows.Forms.ComboBox();
+            this.buttonResetSecsOnTitle = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.fileInfoBox.SuspendLayout();
             this.boxPositionSettings.SuspendLayout();
@@ -95,7 +94,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(488, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(515, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -178,7 +177,7 @@
             this.fileInfoBox.Controls.Add(this.labelLoadedROM);
             this.fileInfoBox.Location = new System.Drawing.Point(12, 28);
             this.fileInfoBox.Name = "fileInfoBox";
-            this.fileInfoBox.Size = new System.Drawing.Size(465, 39);
+            this.fileInfoBox.Size = new System.Drawing.Size(490, 39);
             this.fileInfoBox.TabIndex = 2;
             this.fileInfoBox.TabStop = false;
             this.fileInfoBox.Text = "File Info";
@@ -309,8 +308,7 @@
             // 
             // boxVersionSpecific
             // 
-            this.boxVersionSpecific.Controls.Add(this.textBoxCry);
-            this.boxVersionSpecific.Controls.Add(this.labelCry);
+            this.boxVersionSpecific.Controls.Add(this.comboBoxCry);
             this.boxVersionSpecific.Controls.Add(this.buttonResetCry);
             this.boxVersionSpecific.Controls.Add(this.buttonTruckRemove);
             this.boxVersionSpecific.Location = new System.Drawing.Point(12, 181);
@@ -320,26 +318,14 @@
             this.boxVersionSpecific.TabStop = false;
             this.boxVersionSpecific.Text = "Titlescreen Pokémon Cry";
             // 
-            // textBoxCry
+            // comboBoxCry
             // 
-            this.textBoxCry.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBoxCry.Enabled = false;
-            this.textBoxCry.Location = new System.Drawing.Point(104, 20);
-            this.textBoxCry.MaxLength = 3;
-            this.textBoxCry.Name = "textBoxCry";
-            this.textBoxCry.Size = new System.Drawing.Size(38, 20);
-            this.textBoxCry.TabIndex = 10;
-            this.textBoxCry.TextChanged += new System.EventHandler(this.textBoxCry_TextChanged);
-            // 
-            // labelCry
-            // 
-            this.labelCry.AutoSize = true;
-            this.labelCry.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelCry.Location = new System.Drawing.Point(6, 22);
-            this.labelCry.Name = "labelCry";
-            this.labelCry.Size = new System.Drawing.Size(92, 13);
-            this.labelCry.TabIndex = 10;
-            this.labelCry.Text = "Pokémon Number";
+            this.comboBoxCry.Enabled = false;
+            this.comboBoxCry.FormattingEnabled = true;
+            this.comboBoxCry.Location = new System.Drawing.Point(9, 20);
+            this.comboBoxCry.Name = "comboBoxCry";
+            this.comboBoxCry.Size = new System.Drawing.Size(133, 21);
+            this.comboBoxCry.TabIndex = 11;
             // 
             // buttonResetCry
             // 
@@ -365,43 +351,21 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBoxIntroPKMN);
-            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.comboBoxIntroPKMN);
             this.groupBox1.Controls.Add(this.buttonResetIntroPKMN);
             this.groupBox1.Location = new System.Drawing.Point(169, 181);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(151, 77);
+            this.groupBox1.Size = new System.Drawing.Size(137, 77);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Professor Intro Pokémon";
-            // 
-            // textBoxIntroPKMN
-            // 
-            this.textBoxIntroPKMN.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBoxIntroPKMN.Enabled = false;
-            this.textBoxIntroPKMN.Location = new System.Drawing.Point(104, 20);
-            this.textBoxIntroPKMN.MaxLength = 3;
-            this.textBoxIntroPKMN.Name = "textBoxIntroPKMN";
-            this.textBoxIntroPKMN.Size = new System.Drawing.Size(38, 20);
-            this.textBoxIntroPKMN.TabIndex = 10;
-            this.textBoxIntroPKMN.TextChanged += new System.EventHandler(this.textBoxIntroPKMN_TextChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label1.Location = new System.Drawing.Point(5, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(92, 13);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Pokémon Number";
             // 
             // buttonResetIntroPKMN
             // 
             this.buttonResetIntroPKMN.Enabled = false;
             this.buttonResetIntroPKMN.Location = new System.Drawing.Point(8, 46);
             this.buttonResetIntroPKMN.Name = "buttonResetIntroPKMN";
-            this.buttonResetIntroPKMN.Size = new System.Drawing.Size(134, 23);
+            this.buttonResetIntroPKMN.Size = new System.Drawing.Size(123, 23);
             this.buttonResetIntroPKMN.TabIndex = 8;
             this.buttonResetIntroPKMN.Text = "Reset to Default";
             this.buttonResetIntroPKMN.UseVisualStyleBackColor = true;
@@ -409,16 +373,16 @@
             // 
             // boxStartWith
             // 
+            this.boxStartWith.Controls.Add(this.comboBoxPCItemID);
             this.boxStartWith.Controls.Add(this.label4);
             this.boxStartWith.Controls.Add(this.buttonResetStartItems);
             this.boxStartWith.Controls.Add(this.textBoxMoney);
             this.boxStartWith.Controls.Add(this.labelPCItemAmt);
             this.boxStartWith.Controls.Add(this.textBoxPCItemAmt);
             this.boxStartWith.Controls.Add(this.labelPCItemID);
-            this.boxStartWith.Controls.Add(this.textBoxPCItemID);
-            this.boxStartWith.Location = new System.Drawing.Point(326, 73);
+            this.boxStartWith.Location = new System.Drawing.Point(312, 73);
             this.boxStartWith.Name = "boxStartWith";
-            this.boxStartWith.Size = new System.Drawing.Size(151, 126);
+            this.boxStartWith.Size = new System.Drawing.Size(190, 102);
             this.boxStartWith.TabIndex = 10;
             this.boxStartWith.TabStop = false;
             this.boxStartWith.Text = "Starting Items";
@@ -427,7 +391,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label4.Location = new System.Drawing.Point(6, 75);
+            this.label4.Location = new System.Drawing.Point(5, 73);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(39, 13);
             this.label4.TabIndex = 5;
@@ -436,11 +400,11 @@
             // buttonResetStartItems
             // 
             this.buttonResetStartItems.Enabled = false;
-            this.buttonResetStartItems.Location = new System.Drawing.Point(6, 96);
+            this.buttonResetStartItems.Location = new System.Drawing.Point(136, 44);
             this.buttonResetStartItems.Name = "buttonResetStartItems";
-            this.buttonResetStartItems.Size = new System.Drawing.Size(138, 23);
+            this.buttonResetStartItems.Size = new System.Drawing.Size(48, 46);
             this.buttonResetStartItems.TabIndex = 8;
-            this.buttonResetStartItems.Text = "Reset to Default";
+            this.buttonResetStartItems.Text = "Reset";
             this.buttonResetStartItems.UseVisualStyleBackColor = true;
             this.buttonResetStartItems.Click += new System.EventHandler(this.buttonResetStartItems_Click);
             // 
@@ -451,7 +415,7 @@
             this.textBoxMoney.Location = new System.Drawing.Point(66, 70);
             this.textBoxMoney.MaxLength = 6;
             this.textBoxMoney.Name = "textBoxMoney";
-            this.textBoxMoney.Size = new System.Drawing.Size(78, 20);
+            this.textBoxMoney.Size = new System.Drawing.Size(64, 20);
             this.textBoxMoney.TabIndex = 4;
             this.textBoxMoney.TextChanged += new System.EventHandler(this.textBoxMoney_TextChanged);
             // 
@@ -459,7 +423,7 @@
             // 
             this.labelPCItemAmt.AutoSize = true;
             this.labelPCItemAmt.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelPCItemAmt.Location = new System.Drawing.Point(5, 47);
+            this.labelPCItemAmt.Location = new System.Drawing.Point(6, 47);
             this.labelPCItemAmt.Name = "labelPCItemAmt";
             this.labelPCItemAmt.Size = new System.Drawing.Size(43, 13);
             this.labelPCItemAmt.TabIndex = 3;
@@ -472,29 +436,18 @@
             this.textBoxPCItemAmt.Location = new System.Drawing.Point(66, 44);
             this.textBoxPCItemAmt.MaxLength = 2;
             this.textBoxPCItemAmt.Name = "textBoxPCItemAmt";
-            this.textBoxPCItemAmt.Size = new System.Drawing.Size(29, 20);
+            this.textBoxPCItemAmt.Size = new System.Drawing.Size(64, 20);
             this.textBoxPCItemAmt.TabIndex = 2;
             this.textBoxPCItemAmt.TextChanged += new System.EventHandler(this.textBoxPCItemAmt_TextChanged);
             // 
             // labelPCItemID
             // 
             this.labelPCItemID.AutoSize = true;
-            this.labelPCItemID.Location = new System.Drawing.Point(5, 22);
+            this.labelPCItemID.Location = new System.Drawing.Point(6, 20);
             this.labelPCItemID.Name = "labelPCItemID";
             this.labelPCItemID.Size = new System.Drawing.Size(55, 13);
             this.labelPCItemID.TabIndex = 1;
             this.labelPCItemID.Text = "Item in PC";
-            // 
-            // textBoxPCItemID
-            // 
-            this.textBoxPCItemID.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBoxPCItemID.Enabled = false;
-            this.textBoxPCItemID.Location = new System.Drawing.Point(66, 19);
-            this.textBoxPCItemID.MaxLength = 3;
-            this.textBoxPCItemID.Name = "textBoxPCItemID";
-            this.textBoxPCItemID.Size = new System.Drawing.Size(78, 20);
-            this.textBoxPCItemID.TabIndex = 0;
-            this.textBoxPCItemID.TextChanged += new System.EventHandler(this.textBoxPCItemID_TextChanged);
             // 
             // groupBox3
             // 
@@ -505,7 +458,7 @@
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Location = new System.Drawing.Point(169, 73);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(151, 102);
+            this.groupBox3.Size = new System.Drawing.Size(137, 102);
             this.groupBox3.TabIndex = 11;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Music";
@@ -517,7 +470,7 @@
             this.textBoxTitleMusic.Location = new System.Drawing.Point(70, 15);
             this.textBoxTitleMusic.MaxLength = 3;
             this.textBoxTitleMusic.Name = "textBoxTitleMusic";
-            this.textBoxTitleMusic.Size = new System.Drawing.Size(72, 20);
+            this.textBoxTitleMusic.Size = new System.Drawing.Size(61, 20);
             this.textBoxTitleMusic.TabIndex = 11;
             this.textBoxTitleMusic.TextChanged += new System.EventHandler(this.textBoxTitleMusic_TextChanged);
             // 
@@ -528,7 +481,7 @@
             this.textBoxProfMusic.Location = new System.Drawing.Point(70, 44);
             this.textBoxProfMusic.MaxLength = 3;
             this.textBoxProfMusic.Name = "textBoxProfMusic";
-            this.textBoxProfMusic.Size = new System.Drawing.Size(72, 20);
+            this.textBoxProfMusic.Size = new System.Drawing.Size(61, 20);
             this.textBoxProfMusic.TabIndex = 12;
             this.textBoxProfMusic.TextChanged += new System.EventHandler(this.textBoxProfMusic_TextChanged);
             // 
@@ -537,7 +490,7 @@
             this.buttonResetMusic.Enabled = false;
             this.buttonResetMusic.Location = new System.Drawing.Point(8, 70);
             this.buttonResetMusic.Name = "buttonResetMusic";
-            this.buttonResetMusic.Size = new System.Drawing.Size(134, 23);
+            this.buttonResetMusic.Size = new System.Drawing.Size(123, 23);
             this.buttonResetMusic.TabIndex = 8;
             this.buttonResetMusic.Text = "Reset to Default";
             this.buttonResetMusic.UseVisualStyleBackColor = true;
@@ -565,27 +518,27 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(5, 16);
+            this.label5.Location = new System.Drawing.Point(5, 22);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(101, 13);
+            this.label5.Size = new System.Drawing.Size(69, 13);
             this.label5.TabIndex = 11;
-            this.label5.Text = "Secs on Titlescreen";
+            this.label5.Text = "Secs on Title";
             // 
             // textBoxSecsOnTitle
             // 
             this.textBoxSecsOnTitle.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxSecsOnTitle.Enabled = false;
-            this.textBoxSecsOnTitle.Location = new System.Drawing.Point(106, 13);
+            this.textBoxSecsOnTitle.Location = new System.Drawing.Point(80, 19);
             this.textBoxSecsOnTitle.MaxLength = 2;
             this.textBoxSecsOnTitle.Name = "textBoxSecsOnTitle";
-            this.textBoxSecsOnTitle.Size = new System.Drawing.Size(38, 20);
+            this.textBoxSecsOnTitle.Size = new System.Drawing.Size(50, 20);
             this.textBoxSecsOnTitle.TabIndex = 10;
             // 
             // checkBoxSkipGender
             // 
             this.checkBoxSkipGender.AutoSize = true;
             this.checkBoxSkipGender.Enabled = false;
-            this.checkBoxSkipGender.Location = new System.Drawing.Point(8, 36);
+            this.checkBoxSkipGender.Location = new System.Drawing.Point(34, 50);
             this.checkBoxSkipGender.Name = "checkBoxSkipGender";
             this.checkBoxSkipGender.Size = new System.Drawing.Size(121, 17);
             this.checkBoxSkipGender.TabIndex = 13;
@@ -594,22 +547,53 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.buttonResetSecsOnTitle);
             this.groupBox2.Controls.Add(this.checkBoxSkipGender);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.textBoxSecsOnTitle);
-            this.groupBox2.Location = new System.Drawing.Point(326, 201);
+            this.groupBox2.Location = new System.Drawing.Point(312, 181);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(150, 57);
+            this.groupBox2.Size = new System.Drawing.Size(190, 77);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Other";
+            // 
+            // comboBoxIntroPKMN
+            // 
+            this.comboBoxIntroPKMN.Enabled = false;
+            this.comboBoxIntroPKMN.FormattingEnabled = true;
+            this.comboBoxIntroPKMN.Location = new System.Drawing.Point(9, 19);
+            this.comboBoxIntroPKMN.Name = "comboBoxIntroPKMN";
+            this.comboBoxIntroPKMN.Size = new System.Drawing.Size(122, 21);
+            this.comboBoxIntroPKMN.TabIndex = 12;
+            // 
+            // comboBoxPCItemID
+            // 
+            this.comboBoxPCItemID.Enabled = false;
+            this.comboBoxPCItemID.FormattingEnabled = true;
+            this.comboBoxPCItemID.Location = new System.Drawing.Point(66, 17);
+            this.comboBoxPCItemID.Name = "comboBoxPCItemID";
+            this.comboBoxPCItemID.Size = new System.Drawing.Size(118, 21);
+            this.comboBoxPCItemID.TabIndex = 13;
+            this.comboBoxPCItemID.SelectedIndexChanged += new System.EventHandler(this.comboBoxPCItemID_SelectedIndexChanged);
+            // 
+            // buttonResetSecsOnTitle
+            // 
+            this.buttonResetSecsOnTitle.Enabled = false;
+            this.buttonResetSecsOnTitle.Location = new System.Drawing.Point(136, 17);
+            this.buttonResetSecsOnTitle.Name = "buttonResetSecsOnTitle";
+            this.buttonResetSecsOnTitle.Size = new System.Drawing.Size(48, 23);
+            this.buttonResetSecsOnTitle.TabIndex = 14;
+            this.buttonResetSecsOnTitle.Text = "Reset";
+            this.buttonResetSecsOnTitle.UseVisualStyleBackColor = true;
+            this.buttonResetSecsOnTitle.Click += new System.EventHandler(this.buttonResetSecsOnTitle_Click);
             // 
             // MainScreen
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(488, 268);
+            this.ClientSize = new System.Drawing.Size(515, 265);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.boxStartWith);
@@ -633,9 +617,7 @@
             this.boxPositionSettings.ResumeLayout(false);
             this.boxPositionSettings.PerformLayout();
             this.boxVersionSpecific.ResumeLayout(false);
-            this.boxVersionSpecific.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.boxStartWith.ResumeLayout(false);
             this.boxStartWith.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -674,18 +656,13 @@
         private System.Windows.Forms.GroupBox boxVersionSpecific;
         private System.Windows.Forms.Button buttonResetCry;
         private System.Windows.Forms.Button buttonTruckRemove;
-        private System.Windows.Forms.TextBox textBoxCry;
-        private System.Windows.Forms.Label labelCry;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBoxIntroPKMN;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonResetIntroPKMN;
         private System.Windows.Forms.GroupBox boxStartWith;
         private System.Windows.Forms.Button buttonResetStartItems;
         private System.Windows.Forms.Label labelPCItemAmt;
         private System.Windows.Forms.TextBox textBoxPCItemAmt;
         private System.Windows.Forms.Label labelPCItemID;
-        private System.Windows.Forms.TextBox textBoxPCItemID;
         private System.Windows.Forms.TextBox textBoxMoney;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -698,6 +675,10 @@
         private System.Windows.Forms.TextBox textBoxSecsOnTitle;
         private System.Windows.Forms.CheckBox checkBoxSkipGender;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ComboBox comboBoxCry;
+        private System.Windows.Forms.ComboBox comboBoxIntroPKMN;
+        private System.Windows.Forms.ComboBox comboBoxPCItemID;
+        private System.Windows.Forms.Button buttonResetSecsOnTitle;
     }
 }
 
