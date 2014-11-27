@@ -56,8 +56,10 @@
             this.buttonResetCry = new System.Windows.Forms.Button();
             this.buttonTruckRemove = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.comboBoxIntroPKMN = new System.Windows.Forms.ComboBox();
             this.buttonResetIntroPKMN = new System.Windows.Forms.Button();
             this.boxStartWith = new System.Windows.Forms.GroupBox();
+            this.comboBoxPCItemID = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.buttonResetStartItems = new System.Windows.Forms.Button();
             this.textBoxMoney = new System.Windows.Forms.TextBox();
@@ -74,9 +76,8 @@
             this.textBoxSecsOnTitle = new System.Windows.Forms.TextBox();
             this.checkBoxSkipGender = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.comboBoxIntroPKMN = new System.Windows.Forms.ComboBox();
-            this.comboBoxPCItemID = new System.Windows.Forms.ComboBox();
             this.buttonResetSecsOnTitle = new System.Windows.Forms.Button();
+            this.checkBoxFlashback = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.fileInfoBox.SuspendLayout();
             this.boxPositionSettings.SuspendLayout();
@@ -215,7 +216,7 @@
             // buttonStartPosReset
             // 
             this.buttonStartPosReset.Enabled = false;
-            this.buttonStartPosReset.Location = new System.Drawing.Point(8, 61);
+            this.buttonStartPosReset.Location = new System.Drawing.Point(9, 60);
             this.buttonStartPosReset.Name = "buttonStartPosReset";
             this.buttonStartPosReset.Size = new System.Drawing.Size(134, 32);
             this.buttonStartPosReset.TabIndex = 8;
@@ -313,7 +314,7 @@
             this.boxVersionSpecific.Controls.Add(this.buttonTruckRemove);
             this.boxVersionSpecific.Location = new System.Drawing.Point(12, 181);
             this.boxVersionSpecific.Name = "boxVersionSpecific";
-            this.boxVersionSpecific.Size = new System.Drawing.Size(151, 77);
+            this.boxVersionSpecific.Size = new System.Drawing.Size(151, 86);
             this.boxVersionSpecific.TabIndex = 10;
             this.boxVersionSpecific.TabStop = false;
             this.boxVersionSpecific.Text = "Titlescreen Pokémon Cry";
@@ -332,7 +333,7 @@
             this.buttonResetCry.Enabled = false;
             this.buttonResetCry.Location = new System.Drawing.Point(8, 46);
             this.buttonResetCry.Name = "buttonResetCry";
-            this.buttonResetCry.Size = new System.Drawing.Size(134, 23);
+            this.buttonResetCry.Size = new System.Drawing.Size(134, 31);
             this.buttonResetCry.TabIndex = 8;
             this.buttonResetCry.Text = "Reset to Default";
             this.buttonResetCry.UseVisualStyleBackColor = true;
@@ -342,7 +343,7 @@
             // 
             this.buttonTruckRemove.Location = new System.Drawing.Point(8, 19);
             this.buttonTruckRemove.Name = "buttonTruckRemove";
-            this.buttonTruckRemove.Size = new System.Drawing.Size(134, 50);
+            this.buttonTruckRemove.Size = new System.Drawing.Size(134, 58);
             this.buttonTruckRemove.TabIndex = 9;
             this.buttonTruckRemove.Text = "Remove the Truck";
             this.buttonTruckRemove.UseVisualStyleBackColor = true;
@@ -355,17 +356,26 @@
             this.groupBox1.Controls.Add(this.buttonResetIntroPKMN);
             this.groupBox1.Location = new System.Drawing.Point(169, 181);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(137, 77);
+            this.groupBox1.Size = new System.Drawing.Size(137, 86);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Professor Intro Pokémon";
+            // 
+            // comboBoxIntroPKMN
+            // 
+            this.comboBoxIntroPKMN.Enabled = false;
+            this.comboBoxIntroPKMN.FormattingEnabled = true;
+            this.comboBoxIntroPKMN.Location = new System.Drawing.Point(9, 19);
+            this.comboBoxIntroPKMN.Name = "comboBoxIntroPKMN";
+            this.comboBoxIntroPKMN.Size = new System.Drawing.Size(122, 21);
+            this.comboBoxIntroPKMN.TabIndex = 12;
             // 
             // buttonResetIntroPKMN
             // 
             this.buttonResetIntroPKMN.Enabled = false;
             this.buttonResetIntroPKMN.Location = new System.Drawing.Point(8, 46);
             this.buttonResetIntroPKMN.Name = "buttonResetIntroPKMN";
-            this.buttonResetIntroPKMN.Size = new System.Drawing.Size(123, 23);
+            this.buttonResetIntroPKMN.Size = new System.Drawing.Size(123, 31);
             this.buttonResetIntroPKMN.TabIndex = 8;
             this.buttonResetIntroPKMN.Text = "Reset to Default";
             this.buttonResetIntroPKMN.UseVisualStyleBackColor = true;
@@ -386,6 +396,16 @@
             this.boxStartWith.TabIndex = 10;
             this.boxStartWith.TabStop = false;
             this.boxStartWith.Text = "Starting Items";
+            // 
+            // comboBoxPCItemID
+            // 
+            this.comboBoxPCItemID.Enabled = false;
+            this.comboBoxPCItemID.FormattingEnabled = true;
+            this.comboBoxPCItemID.Location = new System.Drawing.Point(66, 17);
+            this.comboBoxPCItemID.Name = "comboBoxPCItemID";
+            this.comboBoxPCItemID.Size = new System.Drawing.Size(118, 21);
+            this.comboBoxPCItemID.TabIndex = 13;
+            this.comboBoxPCItemID.SelectedIndexChanged += new System.EventHandler(this.comboBoxPCItemID_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -518,7 +538,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(5, 22);
+            this.label5.Location = new System.Drawing.Point(5, 19);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(69, 13);
             this.label5.TabIndex = 11;
@@ -528,7 +548,7 @@
             // 
             this.textBoxSecsOnTitle.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxSecsOnTitle.Enabled = false;
-            this.textBoxSecsOnTitle.Location = new System.Drawing.Point(80, 19);
+            this.textBoxSecsOnTitle.Location = new System.Drawing.Point(80, 16);
             this.textBoxSecsOnTitle.MaxLength = 2;
             this.textBoxSecsOnTitle.Name = "textBoxSecsOnTitle";
             this.textBoxSecsOnTitle.Size = new System.Drawing.Size(50, 20);
@@ -538,7 +558,7 @@
             // 
             this.checkBoxSkipGender.AutoSize = true;
             this.checkBoxSkipGender.Enabled = false;
-            this.checkBoxSkipGender.Location = new System.Drawing.Point(34, 50);
+            this.checkBoxSkipGender.Location = new System.Drawing.Point(9, 63);
             this.checkBoxSkipGender.Name = "checkBoxSkipGender";
             this.checkBoxSkipGender.Size = new System.Drawing.Size(121, 17);
             this.checkBoxSkipGender.TabIndex = 13;
@@ -547,40 +567,22 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.checkBoxFlashback);
             this.groupBox2.Controls.Add(this.buttonResetSecsOnTitle);
             this.groupBox2.Controls.Add(this.checkBoxSkipGender);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.textBoxSecsOnTitle);
             this.groupBox2.Location = new System.Drawing.Point(312, 181);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(190, 77);
+            this.groupBox2.Size = new System.Drawing.Size(190, 86);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Other";
             // 
-            // comboBoxIntroPKMN
-            // 
-            this.comboBoxIntroPKMN.Enabled = false;
-            this.comboBoxIntroPKMN.FormattingEnabled = true;
-            this.comboBoxIntroPKMN.Location = new System.Drawing.Point(9, 19);
-            this.comboBoxIntroPKMN.Name = "comboBoxIntroPKMN";
-            this.comboBoxIntroPKMN.Size = new System.Drawing.Size(122, 21);
-            this.comboBoxIntroPKMN.TabIndex = 12;
-            // 
-            // comboBoxPCItemID
-            // 
-            this.comboBoxPCItemID.Enabled = false;
-            this.comboBoxPCItemID.FormattingEnabled = true;
-            this.comboBoxPCItemID.Location = new System.Drawing.Point(66, 17);
-            this.comboBoxPCItemID.Name = "comboBoxPCItemID";
-            this.comboBoxPCItemID.Size = new System.Drawing.Size(118, 21);
-            this.comboBoxPCItemID.TabIndex = 13;
-            this.comboBoxPCItemID.SelectedIndexChanged += new System.EventHandler(this.comboBoxPCItemID_SelectedIndexChanged);
-            // 
             // buttonResetSecsOnTitle
             // 
             this.buttonResetSecsOnTitle.Enabled = false;
-            this.buttonResetSecsOnTitle.Location = new System.Drawing.Point(136, 17);
+            this.buttonResetSecsOnTitle.Location = new System.Drawing.Point(136, 14);
             this.buttonResetSecsOnTitle.Name = "buttonResetSecsOnTitle";
             this.buttonResetSecsOnTitle.Size = new System.Drawing.Size(48, 23);
             this.buttonResetSecsOnTitle.TabIndex = 14;
@@ -588,12 +590,23 @@
             this.buttonResetSecsOnTitle.UseVisualStyleBackColor = true;
             this.buttonResetSecsOnTitle.Click += new System.EventHandler(this.buttonResetSecsOnTitle_Click);
             // 
+            // checkBoxFlashback
+            // 
+            this.checkBoxFlashback.AutoSize = true;
+            this.checkBoxFlashback.Enabled = false;
+            this.checkBoxFlashback.Location = new System.Drawing.Point(9, 42);
+            this.checkBoxFlashback.Name = "checkBoxFlashback";
+            this.checkBoxFlashback.Size = new System.Drawing.Size(104, 17);
+            this.checkBoxFlashback.TabIndex = 15;
+            this.checkBoxFlashback.Text = "Skip Flashbacks";
+            this.checkBoxFlashback.UseVisualStyleBackColor = true;
+            // 
             // MainScreen
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(515, 265);
+            this.ClientSize = new System.Drawing.Size(515, 278);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.boxStartWith);
@@ -679,6 +692,7 @@
         private System.Windows.Forms.ComboBox comboBoxIntroPKMN;
         private System.Windows.Forms.ComboBox comboBoxPCItemID;
         private System.Windows.Forms.Button buttonResetSecsOnTitle;
+        private System.Windows.Forms.CheckBox checkBoxFlashback;
     }
 }
 

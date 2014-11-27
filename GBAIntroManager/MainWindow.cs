@@ -42,6 +42,7 @@ namespace GBAIntroManager
         private uint skipGender2;
         private uint skipGender3;
         private uint skipGender4;
+        private uint flashbackRemove;
         private uint titlescreenCry;
         private uint titlescreenTime;
         private uint introPokemonNumber1;
@@ -110,6 +111,7 @@ namespace GBAIntroManager
                                 textBoxSecsOnTitle.Enabled = false;
                                 textBoxSecsOnTitle.ResetText();
                                 buttonResetSecsOnTitle.Enabled = false;
+                                checkBoxFlashback.Enabled = false;
 
                                 br.BaseStream.Seek(truckRemovedTester, SeekOrigin.Begin);
                                 if (br.ReadUInt32() == truckRemovedAddr)
@@ -146,6 +148,7 @@ namespace GBAIntroManager
                                 buttonTruckRemove.Visible = false;
                                 textBoxSecsOnTitle.Enabled = true;
                                 buttonResetSecsOnTitle.Enabled = true;
+                                checkBoxFlashback.Enabled = true;
 
                                 br.BaseStream.Seek(titlescreenCry, SeekOrigin.Begin);
                                 UInt16 cryNumber = br.ReadByte();
@@ -180,6 +183,12 @@ namespace GBAIntroManager
                                     checkBoxSkipGender.Checked = true;
                                 else
                                     checkBoxSkipGender.Checked = false;
+
+                                br.BaseStream.Seek(flashbackRemove + 1, SeekOrigin.Begin);
+                                if (br.ReadByte() == 0x1C)
+                                    checkBoxFlashback.Checked = true;
+                                else
+                                    checkBoxFlashback.Checked = false;
                             }
 
                             if (gameType == "RS")
@@ -391,6 +400,12 @@ namespace GBAIntroManager
                             bw.Write((UInt16)0xF7DF);
                             bw.Write((UInt16)0xFD2B);
                         }
+
+                        bw.Seek(Convert.ToInt32(flashbackRemove), SeekOrigin.Begin);
+                        if (checkBoxFlashback.Checked == true)
+                            bw.Write(new byte[] { 0x00, 0x1C, 0x0F, 0xE0 });
+                        else
+                            bw.Write(new byte[] { 0x00, 0x28, 0x0F, 0xD0 });
 
                         int cryNumber = comboBoxCry.SelectedIndex;
                         if (cryNumber > 0xFF)
@@ -900,6 +915,19 @@ namespace GBAIntroManager
                                 }
                             }
                         }
+                        else if (s.StartsWith("FlashbackRemove"))
+                        {
+                            bool success = UInt32.TryParse(s.Split('=')[1], out flashbackRemove);
+                            if (!success)
+                            {
+                                success = UInt32.TryParse(ToDecimal(s.Split('=')[1]), out flashbackRemove);
+                                if (!success)
+                                {
+                                    MessageBox.Show("There was an error parsing the value for the flashback removal offset.");
+                                    break;
+                                }
+                            }
+                        }
                         else if (s.StartsWith("DefaultTSCry"))
                         {
                             bool success = UInt32.TryParse(s.Split('=')[1], out defaultTSCry);
@@ -1158,6 +1186,8 @@ namespace GBAIntroManager
             textBoxSecsOnTitle.Enabled = false;
             textBoxSecsOnTitle.ResetText();
             buttonResetSecsOnTitle.Enabled = false;
+            checkBoxFlashback.Enabled = false;
+            checkBoxFlashback.Checked = false;
             checkBoxSkipGender.Enabled = false;
             checkBoxSkipGender.Checked = false;
         }
@@ -1239,7 +1269,7 @@ namespace GBAIntroManager
 
         private void btnAbout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("GBA Intro Manager v0.0.2\nCreated by Diegoisawesome.\nhttp://domoreaweso.me\n\nThanks to:\nJambo51\ncolcolstyles\nxGal", "About");
+            MessageBox.Show("GBA Intro Manager v0.0.3\nCreated by Diegoisawesome.\nhttp://domoreaweso.me\n\nThanks to:\nJambo51\ncolcolstyles\nxGal", "About");
         }
 
         private void btnReadme_Click(object sender, EventArgs e)
@@ -1446,7 +1476,6 @@ namespace GBAIntroManager
         {
             textBoxSecsOnTitle.Text = "45";
         }
-
 
     }
 }
