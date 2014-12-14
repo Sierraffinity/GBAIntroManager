@@ -149,7 +149,11 @@ namespace GBAIntroManager
                                 br.BaseStream.Seek(titlescreenCry, SeekOrigin.Begin);
                                 UInt16 cryNumber = br.ReadByte();
                                 br.BaseStream.Seek(titlescreenCry + 0x2, SeekOrigin.Begin);
-                                comboBoxCry.SelectedIndex = cryNumber + br.ReadByte();
+                                int cryTester = cryNumber + br.ReadByte();
+                                if (cryTester <= numberOfPokemon)
+                                    comboBoxCry.SelectedIndex = cryTester;
+                                else
+                                    comboBoxCry.SelectedIndex = numberOfPokemon;
 
                                 comboBoxIntroPKMN.Items.Clear();
                                 for (uint i = 0; i <= numberOfPokemon; i++)
@@ -169,7 +173,10 @@ namespace GBAIntroManager
                                     tempSpace += 0xFF;
                                 else if (testCase == 0x40)
                                     tempSpace *= 2;
-                                textBoxTitleMusic.Text = Convert.ToString(tempSpace, 0x10);
+                                if (tempSpace <= 0x1FE)
+                                    textBoxTitleMusic.Text = Convert.ToString(tempSpace, 0x10);
+                                else
+                                    textBoxTitleMusic.Text = "1FE";
 
                                 br.BaseStream.Seek(titlescreenTime, SeekOrigin.Begin);
                                 textBoxSecsOnTitle.Text = Convert.ToString((br.ReadUInt32() + 1) / 60);
@@ -258,14 +265,22 @@ namespace GBAIntroManager
                             }
 
                             br.BaseStream.Seek(startingPCItem, SeekOrigin.Begin);
-                            comboBoxPCItemID.SelectedIndex = br.ReadUInt16();
+                            int itemTester = br.ReadUInt16();
+                            if (itemTester <= numberOfItems)
+                                comboBoxPCItemID.SelectedIndex = itemTester;
+                            else
+                                comboBoxPCItemID.SelectedIndex = numberOfItems;
                             textBoxPCItemAmt.Text = Convert.ToString(br.ReadUInt16());
 
                             if (comboBoxPCItemID.SelectedIndex == 0)
                                 textBoxPCItemAmt.Text = "0";
 
                             br.BaseStream.Seek(startingMoney, SeekOrigin.Begin);
-                            textBoxMoney.Text = Convert.ToString(br.ReadUInt32());
+                            uint moneyTester = br.ReadUInt32();
+                            if (moneyTester <= 999999)
+                                textBoxMoney.Text = Convert.ToString(moneyTester);
+                            else
+                                textBoxMoney.Text = "999999";
 
                             br.BaseStream.Seek(professorMusic, SeekOrigin.Begin);
                             tempSpace = br.ReadByte();
@@ -275,7 +290,10 @@ namespace GBAIntroManager
                                 tempSpace += 0xFF;
                             else if (testCase == 0x40)
                                 tempSpace *= 2;
-                            textBoxProfMusic.Text = Convert.ToString(tempSpace, 0x10);
+                            if (tempSpace <= 0x1FE)
+                                textBoxProfMusic.Text = Convert.ToString(tempSpace, 0x10);
+                            else
+                                textBoxProfMusic.Text = "1FE";
 
                             enableEverything();
                         }
@@ -1391,7 +1409,7 @@ namespace GBAIntroManager
 
         private void btnAbout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("GBA Intro Manager v0.1.0\nCreated by Diegoisawesome.\n\nThanks to:\nJambo51\ncolcolstyles\nxGal", "About");
+            MessageBox.Show("GBA Intro Manager v0.1.1\nCreated by Diegoisawesome.\n\nThanks to:\nJambo51\ncolcolstyles\nxGal", "About");
         }
 
         private void btnReadme_Click(object sender, EventArgs e)
