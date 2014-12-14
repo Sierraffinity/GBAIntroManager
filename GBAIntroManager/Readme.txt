@@ -42,6 +42,8 @@ Skip Flashbacks (FRLG): Toggles the flashback system, where the game recounts so
 
 Skip Gender Choice: Toggles whether or not the professor asks the player their gender. If the choice is skipped, then the player is automatically male (or whatever the sprites are overwritten with).
 
+Skip Rival Naming (FRLG): Toggles whether or not the rival is named in the intro. Defaults to GREEN (FR) or RED (LG). To name the rival from within the game, use "callasm 0x13034D" (FR) or "callasm 0x130325" (LG). If you want to change the default name, change the name at 0x1C5758 (FR) or 0x1C573A (LG), or repoint it if you want. Note: If you repoint the name and save your ROM in GBA Intro Manager at a later date, you'll need to go back and repoint it again.
+
 Credits
 --------------------------------------------------
 Diegoisawesome - I made this! With my own two hands!

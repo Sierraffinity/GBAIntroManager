@@ -76,8 +76,11 @@
             this.textBoxSecsOnTitle = new System.Windows.Forms.TextBox();
             this.checkBoxSkipGender = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.buttonResetSecsOnTitle = new System.Windows.Forms.Button();
+            this.checkBoxSkipRivalNaming = new System.Windows.Forms.CheckBox();
             this.checkBoxFlashback = new System.Windows.Forms.CheckBox();
+            this.buttonResetSecsOnTitle = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.linkLabelDoMoreAwesome = new System.Windows.Forms.LinkLabel();
             this.menuStrip1.SuspendLayout();
             this.fileInfoBox.SuspendLayout();
             this.boxPositionSettings.SuspendLayout();
@@ -558,7 +561,7 @@
             // 
             this.checkBoxSkipGender.AutoSize = true;
             this.checkBoxSkipGender.Enabled = false;
-            this.checkBoxSkipGender.Location = new System.Drawing.Point(9, 63);
+            this.checkBoxSkipGender.Location = new System.Drawing.Point(6, 65);
             this.checkBoxSkipGender.Name = "checkBoxSkipGender";
             this.checkBoxSkipGender.Size = new System.Drawing.Size(121, 17);
             this.checkBoxSkipGender.TabIndex = 13;
@@ -567,6 +570,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.checkBoxSkipRivalNaming);
             this.groupBox2.Controls.Add(this.checkBoxFlashback);
             this.groupBox2.Controls.Add(this.buttonResetSecsOnTitle);
             this.groupBox2.Controls.Add(this.checkBoxSkipGender);
@@ -574,10 +578,32 @@
             this.groupBox2.Controls.Add(this.textBoxSecsOnTitle);
             this.groupBox2.Location = new System.Drawing.Point(312, 181);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(190, 86);
+            this.groupBox2.Size = new System.Drawing.Size(190, 110);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Other";
+            // 
+            // checkBoxSkipRivalNaming
+            // 
+            this.checkBoxSkipRivalNaming.AutoSize = true;
+            this.checkBoxSkipRivalNaming.Enabled = false;
+            this.checkBoxSkipRivalNaming.Location = new System.Drawing.Point(6, 88);
+            this.checkBoxSkipRivalNaming.Name = "checkBoxSkipRivalNaming";
+            this.checkBoxSkipRivalNaming.Size = new System.Drawing.Size(113, 17);
+            this.checkBoxSkipRivalNaming.TabIndex = 16;
+            this.checkBoxSkipRivalNaming.Text = "Skip Rival Naming";
+            this.checkBoxSkipRivalNaming.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxFlashback
+            // 
+            this.checkBoxFlashback.AutoSize = true;
+            this.checkBoxFlashback.Enabled = false;
+            this.checkBoxFlashback.Location = new System.Drawing.Point(6, 42);
+            this.checkBoxFlashback.Name = "checkBoxFlashback";
+            this.checkBoxFlashback.Size = new System.Drawing.Size(104, 17);
+            this.checkBoxFlashback.TabIndex = 15;
+            this.checkBoxFlashback.Text = "Skip Flashbacks";
+            this.checkBoxFlashback.UseVisualStyleBackColor = true;
             // 
             // buttonResetSecsOnTitle
             // 
@@ -590,23 +616,34 @@
             this.buttonResetSecsOnTitle.UseVisualStyleBackColor = true;
             this.buttonResetSecsOnTitle.Click += new System.EventHandler(this.buttonResetSecsOnTitle_Click);
             // 
-            // checkBoxFlashback
+            // label1
             // 
-            this.checkBoxFlashback.AutoSize = true;
-            this.checkBoxFlashback.Enabled = false;
-            this.checkBoxFlashback.Location = new System.Drawing.Point(9, 42);
-            this.checkBoxFlashback.Name = "checkBoxFlashback";
-            this.checkBoxFlashback.Size = new System.Drawing.Size(104, 17);
-            this.checkBoxFlashback.TabIndex = 15;
-            this.checkBoxFlashback.Text = "Skip Flashbacks";
-            this.checkBoxFlashback.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 278);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(149, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "Created by Diegoisawesome | ";
+            // 
+            // linkLabelDoMoreAwesome
+            // 
+            this.linkLabelDoMoreAwesome.AutoSize = true;
+            this.linkLabelDoMoreAwesome.Location = new System.Drawing.Point(156, 278);
+            this.linkLabelDoMoreAwesome.Name = "linkLabelDoMoreAwesome";
+            this.linkLabelDoMoreAwesome.Size = new System.Drawing.Size(121, 13);
+            this.linkLabelDoMoreAwesome.TabIndex = 16;
+            this.linkLabelDoMoreAwesome.TabStop = true;
+            this.linkLabelDoMoreAwesome.Text = "http://domoreaweso.me";
+            this.linkLabelDoMoreAwesome.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelDoMoreAwesome_LinkClicked);
             // 
             // MainScreen
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(515, 278);
+            this.ClientSize = new System.Drawing.Size(515, 303);
+            this.Controls.Add(this.linkLabelDoMoreAwesome);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.boxStartWith);
@@ -693,6 +730,9 @@
         private System.Windows.Forms.ComboBox comboBoxPCItemID;
         private System.Windows.Forms.Button buttonResetSecsOnTitle;
         private System.Windows.Forms.CheckBox checkBoxFlashback;
+        private System.Windows.Forms.CheckBox checkBoxSkipRivalNaming;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.LinkLabel linkLabelDoMoreAwesome;
     }
 }
 

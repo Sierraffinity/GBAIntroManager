@@ -31,7 +31,6 @@ namespace GBAIntroManager
         string gameName;
         string gameType;
         bool posUnlocked = true;
-        bool truckRemoved = true;
         private uint unlockedTester;
         private uint truckRemovedTester;
         private uint truckRemovedAddr;
@@ -43,6 +42,7 @@ namespace GBAIntroManager
         private uint skipGender3;
         private uint skipGender4;
         private uint flashbackRemove;
+        private uint rivalNamingRemove;
         private uint titlescreenCry;
         private uint titlescreenTime;
         private uint introPokemonNumber1;
@@ -54,7 +54,6 @@ namespace GBAIntroManager
         private uint startingPCItem;
         private uint startingMoney;
         private uint professorMusic;
-        private uint defaultTSCry;
         private uint pkmnPictureTable;
         private uint pkmnPaletteTable;
         private uint itemTable;
@@ -62,9 +61,6 @@ namespace GBAIntroManager
         private uint pokemonNamesLocation;
         private ushort numberOfPokemon;
         private Dictionary<byte, char> characterValues;
-        private Dictionary<int, string> nameLookUp;
-        private List<string> table;
-        private List<string> pokemonTable;
 
         private void btnLoadROM_Click(object sender, EventArgs e)
         {
@@ -112,17 +108,16 @@ namespace GBAIntroManager
                                 textBoxSecsOnTitle.ResetText();
                                 buttonResetSecsOnTitle.Enabled = false;
                                 checkBoxFlashback.Enabled = false;
+                                checkBoxSkipRivalNaming.Enabled = false;
 
                                 br.BaseStream.Seek(truckRemovedTester, SeekOrigin.Begin);
                                 if (br.ReadUInt32() == truckRemovedAddr)
                                 {
-                                    truckRemoved = true;
                                     buttonTruckRemove.Text = "Truck Removed";
                                     buttonTruckRemove.Enabled = false;
                                 }
                                 else
                                 {
-                                    truckRemoved = false;
                                     buttonTruckRemove.Text = "Remove the Truck";
                                     buttonTruckRemove.Enabled = true;
                                 }
@@ -136,7 +131,7 @@ namespace GBAIntroManager
                                 else
                                     checkBoxSkipGender.Checked = false;
                             }
-                            else if (gameType == "FRLG")
+                            else if (gameType == "FR" | gameType == "LG")
                             {
                                 posUnlocked = true;
                                 textBoxXPos.Visible = true;
@@ -149,6 +144,7 @@ namespace GBAIntroManager
                                 textBoxSecsOnTitle.Enabled = true;
                                 buttonResetSecsOnTitle.Enabled = true;
                                 checkBoxFlashback.Enabled = true;
+                                checkBoxSkipRivalNaming.Enabled = true;
 
                                 br.BaseStream.Seek(titlescreenCry, SeekOrigin.Begin);
                                 UInt16 cryNumber = br.ReadByte();
@@ -177,6 +173,12 @@ namespace GBAIntroManager
 
                                 br.BaseStream.Seek(titlescreenTime, SeekOrigin.Begin);
                                 textBoxSecsOnTitle.Text = Convert.ToString((br.ReadUInt32() + 1) / 60);
+
+                                br.BaseStream.Seek(rivalNamingRemove, SeekOrigin.Begin);
+                                if (br.ReadByte() == 0x00)
+                                    checkBoxSkipRivalNaming.Checked = true;
+                                else
+                                    checkBoxSkipRivalNaming.Checked = false;
 
                                 br.BaseStream.Seek(skipGender1, SeekOrigin.Begin);
                                 if (br.ReadByte() == 0x00)
@@ -260,7 +262,7 @@ namespace GBAIntroManager
                             textBoxPCItemAmt.Text = Convert.ToString(br.ReadUInt16());
 
                             if (comboBoxPCItemID.SelectedIndex == 0)
-                                textBoxPCItemAmt.Text = "";
+                                textBoxPCItemAmt.Text = "0";
 
                             br.BaseStream.Seek(startingMoney, SeekOrigin.Begin);
                             textBoxMoney.Text = Convert.ToString(br.ReadUInt32());
@@ -289,7 +291,7 @@ namespace GBAIntroManager
             catch (IOException ex)
             {
                 Console.WriteLine(ex.ToString());
-                MessageBox.Show("Could not open the ROM.\nCheck to see if the file is open in another program.", "I/O Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Could not open the ROM.\nCheck to see if the file is open in another program.\n\n" + ex.Message, "I/O Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -373,7 +375,7 @@ namespace GBAIntroManager
                         bw.Seek(Convert.ToInt32(titlescreenMusic), SeekOrigin.Begin);
                         bw.Write((UInt32)Convert.ToUInt32(textBoxTitleMusic.Text, 0x10));
                     }
-                    else if (gameType == "FRLG")
+                    else if (gameType == "FR" | gameType == "LG")
                     {
 
                         if (checkBoxSkipGender.Checked == true)
@@ -406,6 +408,124 @@ namespace GBAIntroManager
                             bw.Write(new byte[] { 0x00, 0x1C, 0x0F, 0xE0 });
                         else
                             bw.Write(new byte[] { 0x00, 0x28, 0x0F, 0xD0 });
+
+                        bw.Seek(Convert.ToInt32(rivalNamingRemove), SeekOrigin.Begin);
+                        if (checkBoxSkipRivalNaming.Checked == true)
+                        {
+                            bw.Write(new byte[] { 0x00, 0x28, 0x17, 0xD0, 0xC0, 0x46, 0xC0, 0x46, 0x90, 0x1C });
+                            bw.Seek(0x6, SeekOrigin.Current);
+                            bw.Write(new byte[] { 0x02, 0x38 });
+                            bw.Seek(0x8, SeekOrigin.Current);
+                            bw.Write(new byte[] { 0x01, 0x22 });
+                            bw.Seek(0x18, SeekOrigin.Current);
+                            bw.Write(new byte[] { 0x61, 0x80, 0x00, 0xF0, 0x8B, 0xF8 });
+                            bw.Seek(0x16, SeekOrigin.Current);
+                            if (gameType == "FR")
+                                bw.Write((UInt32)0x08130859);
+                            else
+                                bw.Write((UInt32)0x08130831);
+                            bw.Seek(0xFC, SeekOrigin.Current);
+                            bw.Write(new byte[] {
+                                0x06, 0x49, 0x09, 0x68, 0x06, 0x48, 0x09, 0x18,
+                                0x06, 0x48, 0x02, 0x78, 0xFF, 0x2A, 0x03, 0xD0,
+                                0x0A, 0x70, 0x01, 0x30, 0x01, 0x31, 0xF8, 0xE7, 
+                                0x0A, 0x70, 0x70, 0x47, 0x08, 0x50, 0x00, 0x03,
+                                0x4C, 0x3A, 0x00, 0x00});
+                            if (gameType == "FR")
+                                bw.Write((UInt32)0x081C5758);
+                            else
+                                bw.Write((UInt32)0x081C573A);
+                            bw.Write(new byte[] {
+                                0x10, 0xB5, 0x0B, 0x48, 0x01, 0x90, 0x0B, 0x49,
+                                0x09, 0x68, 0x0B, 0x48, 0x09, 0x18, 0x0B, 0x4A,
+                                0x0B, 0x1C, 0x10, 0x78, 0x18, 0x70, 0xFF, 0x28,
+                                0x02, 0xD0, 0x01, 0x32, 0x01, 0x33, 0xF8, 0xE7,
+                                0x04, 0x20, 0x00, 0x22, 0x00, 0x23, 0x6D, 0xF7, });
+                            if (gameType == "FR")
+                                bw.Write((byte)0xEF);
+                            else
+                                bw.Write((byte)0xED);
+                            bw.Write(new byte[] {
+                                0xFA, 0x10, 0xBC, 0x01, 0xBC, 0x00, 0x47,
+                                0xE1, 0x68, 0x05, 0x08, 0x08, 0x50, 0x00, 0x03,
+                                0x4C, 0x3A, 0x00, 0x00});
+                            if (gameType == "FR")
+                                bw.Write((UInt32)0x081C5758);
+                            else
+                                bw.Write((UInt32)0x081C573A);
+                            bw.Seek(0x20E, SeekOrigin.Current);
+                            bw.Write(new byte[] { 0x01, 0x48, 0x30, 0x60, 0x4E, 0xE0 });
+                            if (gameType == "FR")
+                                bw.Write((UInt32)0x081301B1);
+                            else
+                                bw.Write((UInt32)0x08130189);
+                            bw.Seek(0x2C6, SeekOrigin.Current);
+                            bw.Write(new byte[] { 0xE0, 0x02 });
+
+                            string addr1;
+                            string addr2;
+                            if (gameType == "FR")
+                            {
+                                addr1 = "0x13034D";
+                                addr2 = "0x1C5758";
+                            }
+                            else
+                            {
+                                addr1 = "0x130325";
+                                addr2 = "0x1C573A";
+                            }
+                            MessageBox.Show("The rival naming sequence has been removed.\nTo name the rival from within the game, use \"callasm " + addr1 + "\".\nIf you want to change the default name, change the name at " + addr2 + ", or repoint it if you want.\nNote: If you repoint the name and save your ROM in GBA Intro Manager at a later date, you'll need to go back and repoint it again.", "Skip Rival Naming", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            bw.Write(new byte[] { 0x3C, 0x21, 0x49, 0x42, 0x88, 0x42, 0x11, 0xDD, 0x90, 0x1E });
+                            bw.Seek(0x6, SeekOrigin.Current);
+                            bw.Write(new byte[] { 0x02, 0x30 });
+                            bw.Seek(0x8, SeekOrigin.Current);
+                            bw.Write(new byte[] { 0x02, 0x22 });
+                            bw.Seek(0x18, SeekOrigin.Current);
+                            bw.Write(new byte[] { 0x28, 0x1C, 0x01, 0xF0, 0x29, 0xFA });
+                            bw.Seek(0x16, SeekOrigin.Current);
+                            if (gameType == "FR")
+                                bw.Write((UInt32)0x08130325);
+                            else
+                                bw.Write((UInt32)0x081302FD);
+                            bw.Seek(0xFC, SeekOrigin.Current);
+                            if (gameType == "FR")
+                                bw.Write(new byte[] {
+                                	0xF0, 0xB5, 0x81, 0xB0, 0x00, 0x06, 0x00, 0x0E,
+                                    0x81, 0x00, 0x09, 0x18, 0xCE, 0x00, 0x12, 0x4F,
+                                    0xF5, 0x19, 0xDF, 0xF7, 0x2F, 0xFB, 0x00, 0x06,
+                                    0x04, 0x16, 0x00, 0x2C, 0x22, 0xD0, 0x00, 0x2C,
+                                    0x30, 0xDD, 0x04, 0x2C, 0x2E, 0xDC, 0x05, 0x20,
+                                    0x41, 0xF7, 0xBE, 0xFF, 0xA8, 0x7E, 0x01, 0x21,
+                                    0xDF, 0xF7, 0xC0, 0xF8, 0xA8, 0x7E, 0xD3, 0xF6,
+                                    0x6F, 0xFD, 0x08, 0x48, 0x00, 0x68, 0x00, 0x7C,
+                                    0x61, 0x1E, 0x09, 0x06, 0x09, 0x0E, 0x01, 0xF0,
+                                    0xF3, 0xF9, 0x01, 0x20, 0xE8, 0x83, 0x38, 0x1C,
+                                    0x08, 0x38, 0x30, 0x18, 0x02, 0x49, 0x14, 0xE0,
+                                    0x98, 0x50, 0x00, 0x03, 0x08, 0xB1, 0x03, 0x02,
+                                    0x65, 0x04, 0x13, 0x08, 0x05, 0x20, 0x41, 0xF7 });
+                            else
+                                bw.Write(new byte[] {
+                                	0xF0, 0xB5, 0x81, 0xB0, 0x00, 0x06, 0x00, 0x0E,
+                                    0x81, 0x00, 0x09, 0x18, 0xCE, 0x00, 0x12, 0x4F,
+                                    0xF5, 0x19, 0xDF, 0xF7, 0x2F, 0xFB, 0x00, 0x06,
+                                    0x04, 0x16, 0x00, 0x2C, 0x22, 0xD0, 0x00, 0x2C,
+                                    0x30, 0xDD, 0x04, 0x2C, 0x2E, 0xDC, 0x05, 0x20,
+                                    0x41, 0xF7, 0xD2, 0xFF, 0xA8, 0x7E, 0x01, 0x21,
+                                    0xDF, 0xF7, 0xC0, 0xF8, 0xA8, 0x7E, 0xD3, 0xF6,
+                                    0x83, 0xFD, 0x08, 0x48, 0x00, 0x68, 0x00, 0x7C,
+                                    0x61, 0x1E, 0x09, 0x06, 0x09, 0x0E, 0x01, 0xF0,
+                                    0xF3, 0xF9, 0x01, 0x20, 0xE8, 0x83, 0x38, 0x1C,
+                                    0x08, 0x38, 0x30, 0x18, 0x02, 0x49, 0x14, 0xE0,
+                                    0x98, 0x50, 0x00, 0x03, 0x08, 0xB1, 0x03, 0x02,
+                                    0x3D, 0x04, 0x13, 0x08, 0x05, 0x20, 0x41, 0xF7 });
+                            bw.Seek(0x20E, SeekOrigin.Current);
+                            bw.Write(new byte[] { 0x00, 0x20, 0x01, 0x21, 0xC6, 0xF7, 0xD9, 0xFC, 0x20, 0x1C });
+                            bw.Seek(0x2C6, SeekOrigin.Current);
+                            bw.Write(new byte[] { 0x0C, 0x21 });
+                        }
 
                         int cryNumber = comboBoxCry.SelectedIndex;
                         if (cryNumber > 0xFF)
@@ -514,9 +634,9 @@ namespace GBAIntroManager
                 }
                 MessageBox.Show("File saved successfully!", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
-            catch (IOException)
+            catch (IOException ex)
             {
-                MessageBox.Show("Could not save ROM file.\nCheck to see if the file is open in another program.", "I/O Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Could not save ROM file.\nCheck to see if the file is open in another program.\n\n" + ex.Message, "I/O Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -928,15 +1048,15 @@ namespace GBAIntroManager
                                 }
                             }
                         }
-                        else if (s.StartsWith("DefaultTSCry"))
+                        else if (s.StartsWith("RivalNamingRemove"))
                         {
-                            bool success = UInt32.TryParse(s.Split('=')[1], out defaultTSCry);
+                            bool success = UInt32.TryParse(s.Split('=')[1], out rivalNamingRemove);
                             if (!success)
                             {
-                                success = UInt32.TryParse(ToDecimal(s.Split('=')[1]), out defaultTSCry);
+                                success = UInt32.TryParse(ToDecimal(s.Split('=')[1]), out rivalNamingRemove);
                                 if (!success)
                                 {
-                                    MessageBox.Show("There was an error parsing the value for the default titlescreen cry.");
+                                    MessageBox.Show("There was an error parsing the value for the rival naming removal offset.");
                                     break;
                                 }
                             }
@@ -1190,6 +1310,8 @@ namespace GBAIntroManager
             checkBoxFlashback.Checked = false;
             checkBoxSkipGender.Enabled = false;
             checkBoxSkipGender.Checked = false;
+            checkBoxSkipRivalNaming.Enabled = false;
+            checkBoxSkipRivalNaming.Checked = false;
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -1269,7 +1391,7 @@ namespace GBAIntroManager
 
         private void btnAbout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("GBA Intro Manager v0.0.3\nCreated by Diegoisawesome.\nhttp://domoreaweso.me\n\nThanks to:\nJambo51\ncolcolstyles\nxGal", "About");
+            MessageBox.Show("GBA Intro Manager v0.1.0\nCreated by Diegoisawesome.\n\nThanks to:\nJambo51\ncolcolstyles\nxGal", "About");
         }
 
         private void btnReadme_Click(object sender, EventArgs e)
@@ -1279,9 +1401,9 @@ namespace GBAIntroManager
                 string fileLoc = System.Windows.Forms.Application.StartupPath + @"\Readme.txt";
                 Process.Start(fileLoc);
             }
-            catch (Win32Exception)
+            catch (Win32Exception ex)
             {
-                MessageBox.Show("Could not open Readme.txt. Did you delete it?", "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Could not open Readme.txt. Did you delete it?\n\n" + ex.Message, "I/O Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -1340,7 +1462,6 @@ namespace GBAIntroManager
                     bw.Seek((Int32)truckRemovedTester, SeekOrigin.Begin);
                     bw.Write((Int32)truckRemovedAddr);
                 }
-                truckRemoved = true;
                 buttonTruckRemove.Text = "Truck Removed";
                 buttonTruckRemove.Enabled = false;
             }
@@ -1352,14 +1473,17 @@ namespace GBAIntroManager
 
         private void buttonResetCry_Click(object sender, EventArgs e)
         {
-            comboBoxCry.SelectedIndex = (Int32)defaultTSCry;
+            if (gameType == "FR")
+                comboBoxCry.SelectedIndex = 0x6;
+            else
+                comboBoxCry.SelectedIndex = 0x3;
         }
 
         private void buttonResetIntroPKMN_Click(object sender, EventArgs e)
         {
             if (gameType == "RS")
                 comboBoxIntroPKMN.SelectedIndex = 0x15E;
-            else if (gameType == "FRLG")
+            else if (gameType == "FR" | gameType == "LG")
                 comboBoxIntroPKMN.SelectedIndex = 0x1D;
             else
                 comboBoxIntroPKMN.SelectedIndex = 0x127;
@@ -1379,7 +1503,7 @@ namespace GBAIntroManager
                 textBoxTitleMusic.Text = "19D";
                 textBoxProfMusic.Text = "176";
             }
-            else if (gameType == "FRLG")
+            else if (gameType == "FR" | gameType == "LG")
             {
                 textBoxTitleMusic.Text = "116";
                 textBoxProfMusic.Text = "124";
@@ -1402,7 +1526,7 @@ namespace GBAIntroManager
                 textBoxTitleMusic.Text = item.Remove(item.Length - 1, 1);
                 textBoxTitleMusic.SelectionStart = textBoxTitleMusic.Text.Length;
             }
-            else if ((n > 0x1FE) && (gameType == "FRLG"))
+            else if ((n > 0x1FE) && (gameType == "FR" | gameType == "LG"))
             {
                 System.Media.SystemSounds.Beep.Play();
                 textBoxTitleMusic.Text = "1FE";
@@ -1463,18 +1587,28 @@ namespace GBAIntroManager
             if (comboBoxPCItemID.SelectedIndex == 0)
             {
                 textBoxPCItemAmt.Enabled = false;
-                textBoxPCItemAmt.Text = "";
+                textBoxPCItemAmt.Text = "0";
             }
             else
-            {
                 textBoxPCItemAmt.Enabled = true;
-                textBoxPCItemAmt.Text = "1";
-            }
         }
 
         private void buttonResetSecsOnTitle_Click(object sender, EventArgs e)
         {
             textBoxSecsOnTitle.Text = "45";
+        }
+
+        private void linkLabelDoMoreAwesome_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("http://domoreaweso.me");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                MessageBox.Show("Could not open the link.\n\n" + ex.Message, "I/O Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
     }
