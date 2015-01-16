@@ -1409,7 +1409,7 @@ namespace GBAIntroManager
 
         private void btnAbout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("GBA Intro Manager v0.1.1\nCreated by Diegoisawesome.\n\nThanks to:\nJambo51\ncolcolstyles\nxGal", "About");
+            MessageBox.Show("GBA Intro Manager v0.1.2\nCreated by Diegoisawesome.\n\nThanks to:\nJambo51\ncolcolstyles\nxGal", "About");
         }
 
         private void btnReadme_Click(object sender, EventArgs e)
@@ -1449,7 +1449,7 @@ namespace GBAIntroManager
                 using (BinaryWriter bw = new BinaryWriter(File.OpenWrite(currentROM)))
                 {
 
-                    bw.Seek(Convert.ToInt32(startingPosition) - 2, SeekOrigin.Begin);
+                    bw.Seek(Convert.ToInt32(startingPosition) - 4, SeekOrigin.Begin);
                     bw.Write((byte[])introPatch);
                 }
 
