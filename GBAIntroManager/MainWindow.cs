@@ -17,7 +17,7 @@ namespace GBAIntroManager
         public MainScreen()
         {
             InitializeComponent();
-            characterValues = ReadTableFile(System.Windows.Forms.Application.StartupPath + @"\Table.ini");
+            characterValues = ReadTableFile(AppDomain.CurrentDomain.BaseDirectory + "/Table.ini");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -75,7 +75,7 @@ namespace GBAIntroManager
                         br.BaseStream.Seek(0xAC, SeekOrigin.Begin);
                         gameCode = Encoding.ASCII.GetString(br.ReadBytes(4)); //Sets the string of the string "gameCode" to the four bytes of the game code.
                     }
-                    ParseINI(System.IO.File.ReadAllLines(System.Windows.Forms.Application.StartupPath + @"\GBAIntroManager.ini"), gameCode);
+                    ParseINI(System.IO.File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + "/GBAIntroManager.ini"), gameCode);
                     labelLoadedROM.Text = "Loaded ROM: " + ofd.SafeFileName + " | " + gameName;
                     string[] gameCodeArray = { "AXVE", "AXPE", "BPRE", "BPGE", "BPEE" };
                     if (gameCodeArray.Contains(gameCode))
@@ -1195,74 +1195,83 @@ namespace GBAIntroManager
         private Dictionary<byte, char> ReadTableFile(string iniLocation)
         {
             Dictionary<byte, char> characterValues = new Dictionary<byte, char>();
-            string[] tableFile = System.IO.File.ReadAllLines(iniLocation);
-            int index = 0;
-            foreach (string s in tableFile)
+            try
             {
-                if (!s.Equals("") && !s.Equals("[Table]") && index != 0x9E && index != 0x9F)
+                string[] tableFile = System.IO.File.ReadAllLines(iniLocation);
+                int index = 0;
+                foreach (string s in tableFile)
                 {
-                    string[] stuff = s.Split('=');
-                    switch (Byte.Parse(ToDecimal("0x" + stuff[0])))
+                    if (!s.Equals("") && !s.Equals("[Table]") && index != 0x9E && index != 0x9F)
                     {
-                        case 0:
-                            characterValues.Add(0, ' ');
-                            break;
-                        case 0x34:
-                            break;
-                        case 0x35:
-                            characterValues.Add(0x35, '=');
-                            break;
-                        case 0x53:
-                            break;
-                        case 0x54:
-                            break;
-                        case 0x55:
-                            break;
-                        case 0x56:
-                            break;
-                        case 0x57:
-                            break;
-                        case 0x58:
-                            break;
-                        case 0x59:
-                            break;
-                        case 0x79:
-                            break;
-                        case 0x7A:
-                            break;
-                        case 0x7B:
-                            break;
-                        case 0x7C:
-                            break;
-                        case 0xB0:
-                            break;
-                        case 0xEF:
-                            break;
-                        case 0xF7:
-                            break;
-                        case 0xF8:
-                            break;
-                        case 0xF9:
-                            break;
-                        case 0xFA:
-                            break;
-                        case 0xFB:
-                            break;
-                        case 0xFC:
-                            break;
-                        case 0xFD:
-                            break;
-                        case 0xFE:
-                            break;
-                        case 0xFF:
-                            break;
-                        default:
-                            characterValues.Add(Byte.Parse(ToDecimal("0x" + stuff[0])), stuff[1].ToCharArray()[0]);
-                            break;
+                        string[] stuff = s.Split('=');
+                        switch (Byte.Parse(ToDecimal("0x" + stuff[0])))
+                        {
+                            case 0:
+                                characterValues.Add(0, ' ');
+                                break;
+                            case 0x34:
+                                break;
+                            case 0x35:
+                                characterValues.Add(0x35, '=');
+                                break;
+                            case 0x53:
+                                break;
+                            case 0x54:
+                                break;
+                            case 0x55:
+                                break;
+                            case 0x56:
+                                break;
+                            case 0x57:
+                                break;
+                            case 0x58:
+                                break;
+                            case 0x59:
+                                break;
+                            case 0x79:
+                                break;
+                            case 0x7A:
+                                break;
+                            case 0x7B:
+                                break;
+                            case 0x7C:
+                                break;
+                            case 0xB0:
+                                break;
+                            case 0xEF:
+                                break;
+                            case 0xF7:
+                                break;
+                            case 0xF8:
+                                break;
+                            case 0xF9:
+                                break;
+                            case 0xFA:
+                                break;
+                            case 0xFB:
+                                break;
+                            case 0xFC:
+                                break;
+                            case 0xFD:
+                                break;
+                            case 0xFE:
+                                break;
+                            case 0xFF:
+                                break;
+                            default:
+                                characterValues.Add(Byte.Parse(ToDecimal("0x" + stuff[0])), stuff[1].ToCharArray()[0]);
+                                break;
+                        }
+                        index++;
                     }
-                    index++;
                 }
             }
+            catch (IOException ex)
+            {
+                MessageBox.Show("Could not open Table.ini. Did you delete it?\n\n" + ex.Message, "I/O Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Environment.Exit(1);
+            }
+
             return characterValues;
         }
 
@@ -1416,7 +1425,7 @@ namespace GBAIntroManager
         {
             try
             {
-                string fileLoc = System.Windows.Forms.Application.StartupPath + @"\Readme.txt";
+                string fileLoc = Application.StartupPath + "/Readme.txt";
                 Process.Start(fileLoc);
             }
             catch (Win32Exception ex)
@@ -1629,5 +1638,9 @@ namespace GBAIntroManager
             }
         }
 
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
     }
 }
