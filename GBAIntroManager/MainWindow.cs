@@ -454,24 +454,25 @@ namespace GBAIntroManager
                             else
                                 bw.Write((UInt32)0x081C573A);
                             bw.Write(new byte[] {
-                                0x10, 0xB5, 0x0B, 0x48, 0x01, 0x90, 0x0B, 0x49,
-                                0x09, 0x68, 0x0B, 0x48, 0x09, 0x18, 0x0B, 0x4A,
-                                0x0B, 0x1C, 0x10, 0x78, 0x18, 0x70, 0xFF, 0x28,
-                                0x02, 0xD0, 0x01, 0x32, 0x01, 0x33, 0xF8, 0xE7,
-                                0x04, 0x20, 0x00, 0x22, 0x00, 0x23, 0x6D, 0xF7, });
+                                0x00, 0xB5, 0x82, 0xB0, 0x0B, 0x48, 0x01, 0x90,
+                                0x0B, 0x49, 0x09, 0x68, 0x0B, 0x48, 0x09, 0x18,
+                                0x0B, 0x4A, 0x0B, 0x1C, 0x10, 0x78, 0x18, 0x70,
+	                            0xFF, 0x28, 0x02, 0xD0, 0x01, 0x32, 0x01, 0x33,
+                                0xF8, 0xE7, 0x04, 0x20, 0x00, 0x22, 0x00, 0x92,
+                                0x00, 0x23, 0x6D, 0xF7, });
                             if (gameType == "FR")
-                                bw.Write((byte)0xEF);
-                            else
                                 bw.Write((byte)0xED);
+                            else
+                                bw.Write((byte)0xEB);
                             bw.Write(new byte[] {
-                                0xFA, 0x10, 0xBC, 0x01, 0xBC, 0x00, 0x47,
+                                0xFA, 0x02, 0xB0, 0x01, 0xBC, 0x00, 0x47,
                                 0xE1, 0x68, 0x05, 0x08, 0x08, 0x50, 0x00, 0x03,
-                                0x4C, 0x3A, 0x00, 0x00});
+                                0x4C, 0x3A, 0x00, 0x00, });
                             if (gameType == "FR")
                                 bw.Write((UInt32)0x081C5758);
                             else
                                 bw.Write((UInt32)0x081C573A);
-                            bw.Seek(0x20E, SeekOrigin.Current);
+                            bw.Seek(0x20A, SeekOrigin.Current);
                             bw.Write(new byte[] { 0x01, 0x48, 0x30, 0x60, 0x4E, 0xE0 });
                             if (gameType == "FR")
                                 bw.Write((UInt32)0x081301B1);
@@ -1418,7 +1419,7 @@ namespace GBAIntroManager
 
         private void btnAbout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("GBA Intro Manager v0.1.2\nCreated by Diegoisawesome.\n\nThanks to:\nJambo51\ncolcolstyles\nxGal", "About");
+            MessageBox.Show("GBA Intro Manager v0.1.3\nCreated by Diegoisawesome.\n\nThanks to:\nJambo51\ncolcolstyles\nxGal", "About");
         }
 
         private void btnReadme_Click(object sender, EventArgs e)
