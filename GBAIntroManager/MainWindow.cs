@@ -75,11 +75,13 @@ namespace GBAIntroManager
                         br.BaseStream.Seek(0xAC, SeekOrigin.Begin);
                         gameCode = Encoding.ASCII.GetString(br.ReadBytes(4)); //Sets the string of the string "gameCode" to the four bytes of the game code.
                     }
-                    ParseINI(System.IO.File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + "/GBAIntroManager.ini"), gameCode);
+                    if (!ParseINI(System.IO.File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + "/GBAIntroManager.ini"), gameCode))
+                        return;
+
                     labelLoadedROM.Text = "Loaded ROM: " + ofd.SafeFileName + " | " + gameName;
-                    string[] gameCodeArray = { "AXVE", "AXPE", "BPRE", "BPGE", "BPEE" };
-                    if (gameCodeArray.Contains(gameCode))
-                    {
+                    //string[] gameCodeArray = { "AXVE", "AXPE", "BPRE", "BPGE", "BPEE" };
+                    //if (gameCodeArray.Contains(gameCode))
+                    //{
                         comboBoxCry.Items.Clear();
                         for (uint i = 0; i <= numberOfPokemon; i++)
                         {
@@ -297,12 +299,12 @@ namespace GBAIntroManager
 
                             enableEverything();
                         }
-                    }
+                    /*}
                     else
                     {
                         disableEverything();
                         MessageBox.Show("Unsupported ROM loaded. Please load a 3rd generation Pokémon game with an existing entry in the INI file.","Unsupported ROM",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-                    }
+                    }*/
 
                 }
             }
@@ -674,7 +676,7 @@ namespace GBAIntroManager
             return bytes;
         }
 
-        private void ParseINI(string[] iniFile, string romCode)
+        private bool ParseINI(string[] iniFile, string romCode)
         {
             bool getValues = false;
             foreach (string s in iniFile)
@@ -709,7 +711,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the item names location.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -722,7 +724,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the number of items.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -735,7 +737,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the Pokémon names offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -748,7 +750,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the number of Pokémon.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -761,7 +763,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the Pokémon image table offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                             pkmnPictureTable += 0x8000000;
@@ -775,7 +777,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the Pokémon palette table offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                             pkmnPaletteTable += 0x8000000;
@@ -789,7 +791,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the starting position offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -802,7 +804,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the intro Pokémon's first offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -815,7 +817,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the intro Pokémon's second offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -828,7 +830,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the intro Pokémon's third number.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -841,7 +843,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the intro Pokémon picture.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -854,7 +856,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the intro Pokémon palette.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -867,7 +869,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the titlescreen cry offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -880,7 +882,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the starting PC item offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -893,7 +895,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the starting money offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -906,7 +908,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the titlescreen music offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -919,7 +921,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the professor music offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -932,7 +934,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the titlescreen time offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -945,7 +947,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the first gender skip offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -958,7 +960,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the first gender skip tester offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                             skipGenderTester += 0x8000000;
@@ -972,7 +974,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the original gender skip offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                             skipGenderOriginal += 0x8000000;
@@ -986,7 +988,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the second gender skip offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -999,7 +1001,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the third gender skip offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -1012,7 +1014,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the fourth gender skip offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -1025,7 +1027,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the truck removal offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                             truckRemovedAddr += 0x8000000;
@@ -1039,7 +1041,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the truck removal tester offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -1052,7 +1054,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the unlock tester offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -1065,7 +1067,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the flashback removal offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -1078,7 +1080,7 @@ namespace GBAIntroManager
                                 if (!success)
                                 {
                                     MessageBox.Show("There was an error parsing the value for the rival naming removal offset.");
-                                    break;
+                                    return false;
                                 }
                             }
                         }
@@ -1087,9 +1089,12 @@ namespace GBAIntroManager
             }
             if (!getValues)
             {
-                gameCode = "Unknown";
-                gameName = "Unknown ROM";
+                disableEverything();
+                labelLoadedROM.Text = "Loaded ROM: " + ofd.SafeFileName + " | Unknown";
+                MessageBox.Show("Unsupported ROM loaded. Please load a 3rd generation Pokémon game with an existing entry in the INI file.", "Unsupported ROM", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
             }
+            return true;
         }
 
         public string ToDecimal(string input)
@@ -1321,7 +1326,7 @@ namespace GBAIntroManager
             textBoxYPos.Enabled = false;
             textBoxYPos.ResetText();
             comboBoxCry.Enabled = false;
-            comboBoxCry.Items.Clear();
+            comboBoxCry.ResetText();
             comboBoxIntroPKMN.Enabled = false;
             comboBoxIntroPKMN.ResetText();
             textBoxTitleMusic.Enabled = false;
@@ -1421,7 +1426,7 @@ namespace GBAIntroManager
 
         private void btnAbout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("GBA Intro Manager v0.1.3\nCreated by Diegoisawesome.\n\nThanks to:\nJambo51\ncolcolstyles\nxGal", "About");
+            MessageBox.Show("GBA Intro Manager v0.1.4\nCreated by Diegoisawesome.\n\nThanks to:\nJambo51\ncolcolstyles\nxGal", "About");
         }
 
         private void btnReadme_Click(object sender, EventArgs e)
